@@ -3,6 +3,7 @@
 #define USE_TIMER_1 true
 #include <TimerInterrupt.h>
 
+#include "flags.hpp"
 #include "modules.hpp"
 
 void pitStart(unsigned long interval_ms) {
@@ -11,7 +12,13 @@ void pitStart(unsigned long interval_ms) {
 }
 
 void pitHandler() {
-    static bool toggle = false;
-    led.writeDigital(toggle);
-    toggle = !toggle;
+    {
+        using namespace flags;
+        tcrt.update();
+        bool l = true, r = true;
+        for (int i = 0; i < 5; ++i) l &= tcrtL.readDigital(), r &= tcrtR.readDigital();
+        if (l) tcrt.set(TCRT::left);
+        if (r) tcrt.set(TCRT::right);
+        if (tcrt[TCRT::left] && tcrt[TCRT::right]) tcrt.set(TCRT::both);
+    }
 }

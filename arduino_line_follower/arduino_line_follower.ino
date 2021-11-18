@@ -9,7 +9,7 @@ void setup() {
     motorL.init();
     motorR.init();
     ccd.init();
-    pitStart(1000);
+    pitStart(20);
 }
 
 int a;

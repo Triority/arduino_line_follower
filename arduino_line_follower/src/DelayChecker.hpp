@@ -33,7 +33,8 @@ template <unsigned N> class DelayChecker {
         for (int i = 0; i < N; ++i)
             if (flags[i] && millis() - targetTime[i] >= 0) discard(i);
     }
-    bool check(int i) { return flags[i]; }
+    bool check(int i) const { return flags[i]; }
+    bool operator[](int i) const { return check(i); }
     char get() {
         for (int i = 0; i < N; ++i)
             if (flags[i]) return i;
@@ -43,7 +44,7 @@ template <unsigned N> class DelayChecker {
         flags.set(i);
         targetTime[i] = millis() + duration[i];
     }
-    bool any() { return flags.any(); }
+    bool any() const { return flags.any(); }
 };
 
 #endif  // FLAGCHECKER_H_
