@@ -8,7 +8,7 @@ class CCD {
     static const int N = 128;
     CCD(uint8_t clk, uint8_t si, uint8_t ao, float threshold) : CLK(clk), SI(si), AO(ao), thresh(threshold) {}
     void init() const;
-    void update();
+    void collect();
     void sendImg() const;
     void calc();
     float expectation() const { return _exp; }

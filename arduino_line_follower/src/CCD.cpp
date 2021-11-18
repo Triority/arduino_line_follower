@@ -9,7 +9,7 @@ void CCD::init() const {
     pinMode(AO, INPUT);
 }
 
-void CCD::update() {
+void CCD::collect() {
     digitalWrite(CLK, HIGH);
     digitalWrite(SI, LOW);
     digitalWrite(CLK, LOW);

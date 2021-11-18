@@ -17,7 +17,7 @@ void setup() {
 }
 
 void loop() {
-    ccd.update();
+    ccd.collect();
     ccd.calc();
     // ccd.sendImg();
     SerialIO::write(ccd.expectation(), ccd.variance());

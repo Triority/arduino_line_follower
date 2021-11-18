@@ -3,7 +3,7 @@
 #include "src/tasks.hpp"
 
 void pidCtrl() {
-    ccd.update();
+    ccd.collect();
     ccd.calc();
     float error = CCD_TARGET - ccd.expectation();
     if (PID_INVERT) error = -error;
