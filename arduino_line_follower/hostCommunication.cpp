@@ -9,6 +9,7 @@ void startMain();
 void startPID();
 void remote();
 void setPID();
+void stopPID();
 
 void hostCommunication() {
     beep.writeDigital(true);
@@ -19,6 +20,7 @@ void hostCommunication() {
     case 0x02: startPID(); break;
     case 0x03: remote(); break;
     case 0x04: setPID(); break;
+    case 0x05: stopPID(); break;
     }
     beep.writeDigital(false);
 }
@@ -49,3 +51,5 @@ inline void setPID() {
     case 0x03: pid.limit = tmp; break;
     }
 }
+
+inline void stopPID() { flags::startPID = false; }
