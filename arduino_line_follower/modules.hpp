@@ -5,11 +5,14 @@
 #include "src/CCD.hpp"
 #include "src/GPIO.hpp"
 #include "src/Motor.hpp"
+#include "src/PID.hpp"
 #include "src/SerialIO.hpp"
 
 extern GPIO led;
+extern GPIO tcrtL, tcrtR;
 extern CCD ccd;
 extern Motor motorL, motorR;
 extern BaseDriver baseDriver;
+extern PID pid;
 
 #endif  // _MODULES_HPP
