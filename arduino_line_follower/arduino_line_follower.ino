@@ -1,7 +1,9 @@
+#include "flags.hpp"
 #include "modules.hpp"
 #include "pit.hpp"
 
 void setup() {
+    flags::init();
     SerialIO::begin(115200);
     led.setMode(OUTPUT);
     motorL.init();
