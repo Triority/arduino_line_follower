@@ -13,4 +13,5 @@ void init() {
     tcrt.setDuration(TCRT::both, FLAG_DURATION_TCRT_BOTH);
 }
 
+bool startPID, startMain;
 }  // namespace flags

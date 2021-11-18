@@ -6,6 +6,7 @@ class PID {
     float u, e_, e__;
     unsigned long t_;
     bool _first;
+    friend void setPID();
 
  public:
     PID(float kp = 0, float ki = 0, float kd = 0, float limit = 0) { set(kp, ki, kd, limit), reset(); }

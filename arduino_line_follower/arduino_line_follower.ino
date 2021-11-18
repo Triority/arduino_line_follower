@@ -25,6 +25,15 @@ void loop() {
     ccd.update();
     ccd.sendImg();
     delay(20);
+
+    void Main();
+    if (flags::startMain) {
+        flags::startMain = false;
+        Main();
+    }
+
+    void pidCtrl();
+    if (flags::startPID) pidCtrl();
 }
 
 void serialEvent() {

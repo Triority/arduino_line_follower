@@ -5,13 +5,17 @@
 
 #include "flags.hpp"
 #include "modules.hpp"
+#include "src/SerialIO.hpp"
 
 void pitStart(unsigned long interval_ms) {
     ITimer1.init();
     ITimer1.setInterval(interval_ms, pitHandler);
 }
 
+void hostCommunication();
+
 void pitHandler() {
+    while (SerialIO::available()) hostCommunication();
     {
         using namespace flags;
         tcrt.update();
