@@ -4,6 +4,7 @@
 #include "pinConfig.h"
 
 GPIO led(LED_BUILTIN);
+GPIO beep(A3);
 GPIO tcrtL(TCRT_L), tcrtR(TCRT_R);
 
 CCD ccd(CCD_CLK, CCD_SI, CCD_AO);

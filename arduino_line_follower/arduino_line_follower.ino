@@ -5,7 +5,11 @@
 void setup() {
     flags::init();
     SerialIO::begin(115200);
+
     led.setMode(OUTPUT);
+    beep.setMode(OUTPUT);
+    tcrtL.setMode(INPUT), tcrtR.setMode(INPUT);
+
     motorL.init();
     motorR.init();
     ccd.init();

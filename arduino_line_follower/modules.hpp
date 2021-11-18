@@ -8,7 +8,7 @@
 #include "src/PID.hpp"
 #include "src/SerialIO.hpp"
 
-extern GPIO led;
+extern GPIO led, beep;
 extern GPIO tcrtL, tcrtR;
 extern CCD ccd;
 extern Motor motorL, motorR;
