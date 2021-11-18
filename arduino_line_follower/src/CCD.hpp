@@ -12,7 +12,7 @@ class CCD {
     void sendImg() const;
     void calc();
     float expectation() const { return _exp; }
-    bool isLost() const { return lost; }
+    bool valid() const { return !lost; }
     uint16_t& operator[](int i) { return data[i]; };
     uint16_t operator[](int i) const { return data[i]; };
 
