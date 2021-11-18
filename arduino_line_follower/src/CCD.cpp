@@ -33,11 +33,12 @@ void CCD::calc() {
     }
     if (s == 0) {
         _s2 = FLT_MAX;
-        lost = true;
+        isValid = false;
         return;
     }
     _exp = (float)m1 / s;
     _s2 = (float)m2 / s - _exp * _exp;
+    isValid = _s2 <= thresh;
 }
 
 void CCD::sendImg() const {

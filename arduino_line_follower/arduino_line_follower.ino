@@ -16,15 +16,12 @@ void setup() {
     pitStart(20);
 }
 
-int a;
-float b;
-
 void loop() {
-    // SerialIO::write(a, b);
-    // SerialIO::flush();
     ccd.update();
-    ccd.sendImg();
-    delay(20);
+    ccd.calc();
+    // ccd.sendImg();
+    SerialIO::write(ccd.expectation(), ccd.variance());
+    SerialIO::flush();
 
     void Main();
     if (flags::startMain) {
@@ -33,13 +30,5 @@ void loop() {
     }
 
     void pidCtrl();
-    if (flags::startPID) pidCtrl();
-}
-
-void serialEvent() {
-    // while (SerialIO::available()) {
-    //     SerialIO::read(a);
-    //     SerialIO::write(a, b);
-    //     SerialIO::flush();
-    // }
+    while (flags::startPID) pidCtrl();
 }

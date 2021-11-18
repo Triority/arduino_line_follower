@@ -3,6 +3,7 @@
 
 // CCD
 #define CCD_TARGET 64.f
+#define CCD_THRESHOLD 200.f
 
 // PID
 #define PID_INVERT true
