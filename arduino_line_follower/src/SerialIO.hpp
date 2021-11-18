@@ -20,13 +20,18 @@ template <typename T> inline bool read(T& t) {
 }
 template <typename T, typename... U> inline bool read(T& t, U&... u) { return read(t) && read(u...); }
 
-template <typename T> inline void write(T t) {
+template <typename T> inline bool write(T t) {
+    if (!Serial.availableForWrite()) return false;
     float buf = (float)t;
     Serial.write((const uint8_t*)&buf, 4);
+    return true;
 }
-template <typename T, typename... U> inline void write(T t, U... u) { write(t), write(u...); }
+template <typename T, typename... U> inline bool write(T t, U... u) { return write(t) && write(u...); }
 
-inline void flush() { Serial.write("\x00\x00\x80\x7f", 4), Serial.flush(); }
+inline void flush() {
+    if (Serial.availableForWrite()) Serial.write("\x00\x00\x80\x7f", 4);
+    Serial.flush();
+}
 
 }  // namespace SerialIO
 
