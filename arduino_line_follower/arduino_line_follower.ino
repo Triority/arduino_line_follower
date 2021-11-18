@@ -17,7 +17,7 @@ void loop() {
     // SerialIO::write(a, b);
     // SerialIO::flush();
     ccd.update();
-    ccd.send();
+    ccd.sendImg();
     delay(20);
 }
 
