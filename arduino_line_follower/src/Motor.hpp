@@ -14,13 +14,13 @@ class Motor {
         pinMode(pwmPin, OUTPUT);
         pinMode(dirPin, OUTPUT);
     }
-    void setPwm(uint8_t pwm) { analogWrite(pwmPin, constrain(pwm, 0, 255)); }
-    void setDir(uint8_t dir) {
+    void setPwm(int32_t pwm) { analogWrite(pwmPin, constrain(pwm, 0, 255)); }
+    void setDir(bool dir) {
         this->dir = dir;
         digitalWrite(dirPin, dir ? LOW : HIGH);
     }
     void toggleDir() { setDir(!dir); }
-    void setSpeed(int pwm) {
+    void setSpeed(int32_t pwm) {
         if (pwm > 0) setDir(true);
         else {
             setDir(false);
