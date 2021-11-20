@@ -1,34 +1,43 @@
+#include "Main.hpp"
 #include "flags.hpp"
 #include "modules.hpp"
 #include "pit.hpp"
 
 void setup() {
     flags::init();
-    SerialIO::begin(115200);
 
-    led.setMode(OUTPUT);
+    // led.setMode(OUTPUT);
     beep.setMode(OUTPUT);
     tcrtL.setMode(INPUT), tcrtR.setMode(INPUT);
 
-    motorL.init();
-    motorR.init();
+    // motorL.init();
+    // motorR.init();
     ccd.init();
-    pitStart(20);
+    // pitStart(200);
+    SerialIO::begin(115200);
 }
 
 void loop() {
-    ccd.collect();
-    ccd.calc();
-    // ccd.sendImg();
-    SerialIO::write(ccd.expectation(), ccd.variance());
-    SerialIO::flush();
+    testCCD(false);
 
-    void Main();
-    if (flags::startMain) {
-        flags::startMain = false;
-        Main();
-    }
+    // pidCtrl();
 
-    void pidCtrl();
-    while (flags::startPID) pidCtrl();
+    // if (flags::startMain) {
+    //     flags::startMain = false;
+    //     Main();
+    // }
+
+    // if (flags::startPID) pidCtrl();
+
+    // baseDriver.cmdVel(100, 0);
+
+    // void hostCommunication();
+    // while (SerialIO::available()) hostCommunication();
+    // pidCtrl();
+    // delay(20);
+}
+
+void serialEvent() {
+    // void hostCommunication();
+    // while (SerialIO::available()) hostCommunication();
 }

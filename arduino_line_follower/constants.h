@@ -2,18 +2,18 @@
 #define _CONSTANTS_H_
 
 // CCD
-#define CCD_TARGET 64.f
-#define CCD_THRESHOLD 200.f
+#define CCD_TARGET 63
+#define CCD_THRESHOLD 2000
 
 // PID
-#define PID_INVERT true
-#define PID_P 0.f
-#define PID_I 0.f
+#define PID_INVERT false
+#define PID_P 2.f
+#define PID_I 1.f
 #define PID_D 0.f
-#define PID_LIMIT 0.f
+#define PID_LIMIT 255.f
 
 // BaseDriver
-#define BASE_X_VEL 100.f
+#define BASE_X_VEL 0.f
 
 // Flags
 #define FLAG_DURATION_TCRT_SIDE 200

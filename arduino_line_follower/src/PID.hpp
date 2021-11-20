@@ -20,7 +20,10 @@ class PID {
     float update(float e, unsigned long t) {
         float dt = t - t_;
         t_ = t;
-        if (!_first && dt > 0) u += kp * ((e - e_) + ki * e * dt + kd * (e - 2 * e_ + e__) / dt);
+        if (!_first && dt > 0) {
+            dt /= 1000;
+            u += kp * ((e - e_) + ki * e * dt + kd * (e - 2 * e_ + e__) / dt);
+        }
         _first = false;
         e__ = e_, e_ = e;
         u = constrain(u, -limit, limit);

@@ -15,7 +15,9 @@ void pitStart(unsigned long interval_ms) {
 void hostCommunication();
 
 void pitHandler() {
-    while (SerialIO::available()) hostCommunication();
+    // static bool toggle = false;
+    // beep.writeDigital(toggle ^= 1);
+    // if (SerialIO::available()) hostCommunication();
     {
         using namespace flags;
         tcrt.update();

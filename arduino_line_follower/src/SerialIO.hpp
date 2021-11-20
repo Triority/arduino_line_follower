@@ -10,7 +10,10 @@ inline void begin(unsigned long baud) {
         ;
 }
 
-inline bool available() { return Serial.available() && Serial.find((char*)"\x7f\x7f\x3f\x01", 4); }
+inline bool available() {
+    bool res = Serial.available() && Serial.find((char*)"\x7f\x7f\x3f\x01", 4);
+    return res;
+}
 
 template <typename T> inline bool read(T& t) {
     float buf;
@@ -19,6 +22,10 @@ template <typename T> inline bool read(T& t) {
     return true;
 }
 template <typename T, typename... U> inline bool read(T& t, U&... u) { return read(t) && read(u...); }
+
+inline void clear() {
+    while (Serial.available()) Serial.read();
+}
 
 template <typename T> inline bool write(T t) {
     if (!Serial.availableForWrite()) return false;
