@@ -19,4 +19,4 @@ BaseDriver baseDriver(motorL, motorR);
 
 PID pid(PID_P, PID_I, PID_D, PID_LIMIT);
 
-TCRTArray tcrtArray((const uint8_t[]){TCRT_ARRAY}, TCRT_NUM, TCRT_THRESH_LOW, TCRT_THRESH_HIGH);
+TCRTArray tcrtArray((const uint8_t[]){TCRT_ARRAY}, TCRT_NUM);

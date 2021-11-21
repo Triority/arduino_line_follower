@@ -22,15 +22,16 @@ void setup() {
 }
 
 void loop() {
-    // flags::tcrt.update();
+    flags::tcrt.update();
+
     // tcrtArray.collect();
     // // tcrtArray.send();
     // tcrtArray.calc();
-    // // SerialIO::write(tcrtArray.valid(), tcrtArray.res());
-    // // SerialIO::flush();
+    // SerialIO::write(tcrtArray.valid(), tcrtArray.res());
+    // SerialIO::flush();
     // delay(100);
 
-    pidCtrl(true);
+    pidCtrl(false);
 }
 
 void serialEvent() {

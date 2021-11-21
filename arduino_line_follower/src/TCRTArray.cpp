@@ -2,10 +2,9 @@
 
 #include "SerialIO.hpp"
 
-TCRTArray::TCRTArray(const uint8_t* pins, int8_t num, int16_t threshLow, int16_t threshHigh)
-    : N(num), low(threshLow), high(threshHigh) {
+TCRTArray::TCRTArray(const uint8_t* pins, int8_t num) : N(num) {
     this->pins = (uint8_t*)malloc(sizeof(uint8_t) * num);
-    this->data = (int16_t*)malloc(sizeof(int16_t) * num);
+    this->data = (bool*)malloc(sizeof(bool) * num);
     for (int i = 0; i < N; ++i) this->pins[i] = pins[i];
 }
 
@@ -19,7 +18,7 @@ void TCRTArray::init() {
 }
 
 void TCRTArray::collect() {
-    for (int i = 0; i < N; ++i) data[i] = analogRead(pins[i]);
+    for (int i = 0; i < N; ++i) data[i] = digitalRead(pins[i]);
 }
 
 void TCRTArray::send() const {
@@ -31,10 +30,10 @@ void TCRTArray::calc() {
     _valid = false;
     int32_t m0 = 0, m1 = 0;
     for (int32_t i = 0; i < N; ++i) {
-        _valid |= data[i] >= high;  //
-        if (data[i] >= low) {
-            m0 += data[i];
-            m1 += (i << 10) * data[i];
+        if (data[i]) {
+            _valid = true;
+            ++m0;
+            m1 += i << 10;
         }
     }
     if (_valid) _res = m1 / m0;

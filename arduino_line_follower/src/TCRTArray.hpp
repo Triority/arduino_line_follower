@@ -6,20 +6,19 @@
 class TCRTArray {
     const int8_t N;
     uint8_t* pins = nullptr;
-    int16_t* data = nullptr;
-    const int16_t low, high;
+    bool* data = nullptr;
     bool _valid = false;
     int32_t _res;
     void collectDigital();
     void collectAnalog();
 
  public:
-    TCRTArray(const uint8_t* pins, int8_t N, int16_t threshLow, int16_t threshHigh);
+    TCRTArray(const uint8_t* pins, int8_t N);
     ~TCRTArray();
     void init();
 
     void collect();
-    int16_t operator[](int i) const { return data[i]; }
+    bool operator[](int i) const { return data[i]; }
     int8_t size() const { return N; }
     void send() const;
 
