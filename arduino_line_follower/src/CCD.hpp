@@ -7,8 +7,10 @@ class CCD {
  public:
     static const int N = 128;
     CCD(uint8_t clk, uint8_t si, uint8_t ao, int32_t threshold) : CLK(clk), SI(si), AO(ao), thresh(threshold) {}
-    void init() const;
+    void init();
     void collect();
+    void expDelay(unsigned long ms) const;
+    void autoExp(int16_t targetAvg);
     void send() const;
     void sendImg() const;
     void calc();
@@ -17,9 +19,11 @@ class CCD {
     uint16_t operator[](int i) const { return data[i]; };
     int16_t res() const { return _res; }
     int32_t s2() const { return _s2; }
+    unsigned long _t;
+    int16_t _expT = 0;
+    int16_t _res, _avg;
 
  private:
-    int16_t _res, _avg;
     int32_t _s2;
     const uint8_t CLK, SI, AO;
     const int32_t thresh;

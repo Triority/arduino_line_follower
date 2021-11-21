@@ -5,7 +5,12 @@
 
 namespace flags {
 namespace TCRT {
-enum { left, right, both, __size };
+enum {
+    both,
+    left,
+    right,
+    __size,
+};
 }
 extern DelayChecker<TCRT::__size> tcrt;
 void init();

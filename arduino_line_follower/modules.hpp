@@ -3,6 +3,7 @@
 
 #include "src/BaseDriver.hpp"
 #include "src/CCD.hpp"
+#include "src/Filter.hpp"
 #include "src/GPIO.hpp"
 #include "src/Motor.hpp"
 #include "src/PID.hpp"
@@ -14,5 +15,6 @@ extern CCD ccd;
 extern Motor motorL, motorR;
 extern BaseDriver baseDriver;
 extern PID pid;
+extern SMA<int16_t, 5> filter;
 
 #endif  // _MODULES_HPP

@@ -3,13 +3,15 @@
 #include <Arduino.h>
 #include <float.h>
 
-void CCD::init() const {
+void CCD::init() {
     pinMode(CLK, OUTPUT);
     pinMode(SI, OUTPUT);
     pinMode(AO, INPUT);
+    collect();
 }
 
 void CCD::collect() {
+    _t = millis();
     digitalWrite(CLK, HIGH);
     digitalWrite(SI, LOW);
     digitalWrite(CLK, LOW);
@@ -21,6 +23,17 @@ void CCD::collect() {
         data[i] = analogRead(AO);
         digitalWrite(CLK, HIGH);
     }
+}
+
+void CCD::expDelay(unsigned long ms) const {
+    while (millis() - _t < ms)
+        ;
+}
+
+void CCD::autoExp(int16_t targetAvg) {
+    _expT += targetAvg - _avg;
+    _expT = constrain(_expT, 0, 100);
+    expDelay(_expT);
 }
 
 void CCD::calc() {

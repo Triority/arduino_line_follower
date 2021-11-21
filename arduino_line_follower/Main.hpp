@@ -2,7 +2,7 @@
 #define _MAIN_HPP
 
 void testCCD(bool sendImg);
-void pidCtrl();
+void pidCtrl(bool send = false);
 void Main();
 
 #endif  // _MAIN_HPP

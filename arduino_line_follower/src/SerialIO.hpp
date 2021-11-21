@@ -4,16 +4,12 @@
 namespace SerialIO {
 
 inline void begin(unsigned long baud) {
-    Serial.setTimeout(100);
     Serial.begin(baud);
     while (!Serial)
         ;
 }
 
-inline bool available() {
-    bool res = Serial.available() && Serial.find((char*)"\x7f\x7f\x3f\x01", 4);
-    return res;
-}
+inline bool available() { return Serial.available() && Serial.find((char*)"\x7f\x7f\x3f\x01", 4); }
 
 template <typename T> inline bool read(T& t) {
     float buf;

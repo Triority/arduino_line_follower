@@ -7,7 +7,7 @@
 
 // PID
 #define PID_INVERT false
-#define PID_P 2.f
+#define PID_P 3.f
 #define PID_I 1.f
 #define PID_D 0.f
 #define PID_LIMIT 255.f
