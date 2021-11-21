@@ -48,7 +48,6 @@ inline void setPID() {
     case 0x00: pid.kp = tmp; break;
     case 0x01: pid.ki = tmp; break;
     case 0x02: pid.kd = tmp; break;
-    case 0x03: pid.limit = tmp; break;
     }
 }
 

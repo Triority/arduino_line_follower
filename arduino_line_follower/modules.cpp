@@ -17,6 +17,8 @@ Motor motorR(MOTOR_R_E, MOTOR_R_A, MOTOR_R_B);
 
 BaseDriver baseDriver(motorL, motorR);
 
-PID pid(PID_P, PID_I, PID_D, PID_LIMIT);
+PID pid(PID_P, PID_I, PID_D);
 
 TCRTArray tcrtArray((const uint8_t[]){TCRT_ARRAY}, TCRT_NUM);
+
+Timer timer;

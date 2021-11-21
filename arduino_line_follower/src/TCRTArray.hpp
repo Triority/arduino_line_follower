@@ -6,7 +6,7 @@
 class TCRTArray {
     const int8_t N;
     uint8_t* pins = nullptr;
-    bool* data = nullptr;
+    int16_t* data = nullptr;
     bool _valid = false;
     int32_t _res;
     void collectDigital();
@@ -18,6 +18,7 @@ class TCRTArray {
     void init();
 
     void collect();
+    void reset();
     bool operator[](int i) const { return data[i]; }
     int8_t size() const { return N; }
     void send() const;

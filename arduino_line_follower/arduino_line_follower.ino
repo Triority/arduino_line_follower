@@ -18,7 +18,7 @@ void setup() {
     // pitStart(200);
     isrStart();
     SerialIO::begin(115200);
-    // Main();
+    Main();
 }
 
 void loop() {

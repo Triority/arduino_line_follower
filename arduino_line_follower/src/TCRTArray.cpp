@@ -4,8 +4,9 @@
 
 TCRTArray::TCRTArray(const uint8_t* pins, int8_t num) : N(num) {
     this->pins = (uint8_t*)malloc(sizeof(uint8_t) * num);
-    this->data = (bool*)malloc(sizeof(bool) * num);
+    this->data = (int16_t*)malloc(sizeof(int16_t) * num);
     for (int i = 0; i < N; ++i) this->pins[i] = pins[i];
+    reset();
 }
 
 TCRTArray::~TCRTArray() {
@@ -18,7 +19,10 @@ void TCRTArray::init() {
 }
 
 void TCRTArray::collect() {
-    for (int i = 0; i < N; ++i) data[i] = digitalRead(pins[i]);
+    for (int i = 0; i < N; ++i) data[i] += digitalRead(pins[i]) == HIGH;
+}
+void TCRTArray::reset() {
+    for (int i = 0; i < N; ++i) data[i] = 0;
 }
 
 void TCRTArray::send() const {
@@ -32,8 +36,8 @@ void TCRTArray::calc() {
     for (int32_t i = 0; i < N; ++i) {
         if (data[i]) {
             _valid = true;
-            ++m0;
-            m1 += i << 10;
+            m0 += data[i];
+            m1 += (i << 10) * data[i];
         }
     }
     if (_valid) _res = m1 / m0;

@@ -38,17 +38,15 @@ class PID {
 #else  // INCREMENTAL_PID
 
 class PID {
-    float kp, ki, kd, limit;
+    float kp, ki, kd;
     float i, e_, u;
     unsigned long t_;
     bool _first;
     friend void setPID();
 
  public:
-    PID(float kp = 0, float ki = 0, float kd = 0, float limit = 0) { set(kp, ki, kd, limit), reset(); }
-    void set(float kp, float ki, float kd, float limit) {
-        this->kp = kp, this->ki = ki, this->kd = kd, this->limit = limit;
-    }
+    PID(float kp = 0, float ki = 0, float kd = 0) { set(kp, ki, kd), reset(); }
+    void set(float kp, float ki, float kd) { this->kp = kp, this->ki = ki, this->kd = kd; }
     void reset() {
         i = e_ = u = 0;
         _first = true;
@@ -63,7 +61,6 @@ class PID {
         }
         _first = false;
         e_ = e;
-        u = constrain(u, -limit, limit);
         return u;
     }
     float output() const { return u; }

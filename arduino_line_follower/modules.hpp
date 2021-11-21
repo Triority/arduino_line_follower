@@ -10,6 +10,7 @@
 #include "src/PID.hpp"
 #include "src/SerialIO.hpp"
 #include "src/TCRTArray.hpp"
+#include "src/Timer.hpp"
 
 extern GPIO led, beep;
 extern GPIO tcrtL, tcrtR;
@@ -18,5 +19,6 @@ extern Motor motorL, motorR;
 extern BaseDriver baseDriver;
 extern PID pid;
 extern TCRTArray tcrtArray;
+extern Timer timer;
 
 #endif  // _MODULES_HPP

@@ -18,19 +18,21 @@
 
 void pidCtrl(bool send) {
     tcrtArray.collect();
-    tcrtArray.calc();
-    if (tcrtArray.valid()) {
-        int error = TCRT_TARGET - tcrtArray.res();
-        if (PID_INVERT) error = -error;
+    if (timer.ready(PID_PERIOD_MS)) {
+        tcrtArray.calc();
+        if (tcrtArray.valid()) {
+            int error = TCRT_TARGET - tcrtArray.res();
+            if (PID_INVERT) error = -error;
 
-        pid.update(error, millis());
-        if (send) {
-            SerialIO::write(error, pid.output());
-            SerialIO::flush();
+            pid.update(error, millis());
+            if (send) {
+                SerialIO::write(error, pid.output());
+                SerialIO::flush();
+            }
         }
-        baseDriver.cmdVel(BASE_X_VEL, int32_t(pid.output()) >> 4);
+        baseDriver.cmdVel(BASE_X_VEL, int32_t(pid.output()) >> 10);
+        tcrtArray.reset();
     }
-    // delay(100);
 }
 
 void Main() {
