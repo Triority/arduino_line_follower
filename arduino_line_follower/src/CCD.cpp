@@ -12,6 +12,7 @@ void CCD::init() {
 
 void CCD::collect() {
     _t = millis();
+    int32_t sum = 0;
     digitalWrite(CLK, HIGH);
     digitalWrite(SI, LOW);
     digitalWrite(CLK, LOW);
@@ -21,8 +22,10 @@ void CCD::collect() {
     for (int i = 0; i < N; ++i) {
         digitalWrite(CLK, LOW);
         data[i] = analogRead(AO);
+        sum += (int32_t)data[i];
         digitalWrite(CLK, HIGH);
     }
+    _avg = sum / N;
 }
 
 void CCD::expDelay(unsigned long ms) const {
@@ -37,24 +40,15 @@ void CCD::autoExp(int16_t targetAvg) {
 }
 
 void CCD::calc() {
-    const int M = 10;
+    int16_t l = -1, r = -1;
 
-    int16_t peak = 0, pi = 0;
-    int32_t sum = 0;
-
-    for (int i = M; i < N - M; ++i) {
-        sum += data[i];
-        int16_t cur = data[i - M] + data[i + M] - (data[i] << 1);
-        if (cur > peak) peak = cur, pi = i;
+    for (int i = Sep; i < N - Sep; ++i) {
+        if (abs(data[i] - data[i - Sep]) <= threshLow && data[i] - data[i + Sep] >= threshHigh) l = i + Sep;
+        if (abs(data[i] - data[i + Sep]) <= threshLow && data[i] - data[i - Sep] >= threshHigh) r = i - Sep;
     }
 
-    _avg = sum / (N - 2 * M);
-
-    _s2 = 0;
-    for (int i = M; i < N - M; ++i) { _s2 += (data[i] - _avg) * (data[i] - _avg); }
-
-    isValid = _s2 > thresh;
-    if (isValid) _res = pi;
+    isValid = l != -1 && r != -1;
+    if (isValid) _res = (l + r) >> 1;
 }
 
 void CCD::send() const {

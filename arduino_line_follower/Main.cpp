@@ -1,6 +1,7 @@
 #include "Main.hpp"
 
 #include "constants.h"
+#include "flags.hpp"
 #include "modules.hpp"
 #include "src/tasks.hpp"
 
@@ -9,9 +10,10 @@ void testCCD(bool sendImg) {
     ccd.calc();
     if (sendImg) ccd.send();
     else {
-        SerialIO::write(ccd.res(), ccd.s2());
+        SerialIO::write(ccd.expTime(), ccd.avg(), ccd.res());
         SerialIO::flush();
     }
+    ccd.autoExp(100);
 }
 
 void pidCtrl(bool send) {
@@ -22,10 +24,16 @@ void pidCtrl(bool send) {
     error = filter.update(error);
     pid.update(error, millis());
     if (send) {
-        SerialIO::write(ccd.s2(), error, pid.output());
+        SerialIO::write(error, pid.output());
         SerialIO::flush();
     }
     baseDriver.cmdVel(BASE_X_VEL, pid.output());
+    ccd.autoExp(100);
 }
 
-void Main() {}
+void Main() {
+    WaitRight(pidCtrl());
+    baseDriver.hardBrake();
+    for (;;)
+        ;
+}

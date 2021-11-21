@@ -20,7 +20,7 @@ class Motor {
         pinMode(dirB, OUTPUT);
         setPwm(0);
     }
-    void setPwm(int32_t pwm) { analogWrite(pwmPin, constrain(pwm, 0, 255)); }
+    void setPwm(int32_t pwm) { analogWrite(pwmPin, min(pwm, 255)); }
     void setDir(bool dir) {
         this->dir = dir;
         digitalWrite(dirA, dir ? LOW : HIGH);
@@ -33,7 +33,7 @@ class Motor {
             setDir(false);
             pwm = -pwm;
         }
-        setPwm(pwm);
+        setPwm(pwm + 50);
     }
 };
 

@@ -1,20 +1,41 @@
 #ifndef _TASKS_HPP
 #define _TASKS_HPP
 
-#define TaskLoopWhile(statement, condition) \
-    while (condition) { statement }
+#define WaitLeft(statement)                   \
+    while (!flags::tcrt[flags::TCRT::left]) { \
+        flags::tcrt.update();                 \
+        { statement; }                        \
+    }
 
-#define TaskLoopDelay(statement, delay_ms) \
-    for (unsigned long _start = millis(); millis() - _start < delay;) { statement }
+#define WaitRight(statement)                   \
+    while (!flags::tcrt[flags::TCRT::right]) { \
+        flags::tcrt.update();                  \
+        { statement; }                         \
+    }
 
-#define TaskOnceWhile(statement, condition) \
-    { statement }                           \
-    while (condition)                       \
-        ;
+#define WaitBoth(statement)                   \
+    while (!flags::tcrt[flags::TCRT::both]) { \
+        flags::tcrt.update();                 \
+        { statement; }                        \
+    }
 
-#define TaskOnceDelay(statement, delay_ms)                            \
-    { statement }                                                     \
-    for (unsigned long _start = millis(); millis() - _start < delay;) \
-        ;
+#define WaitDelay(statement, delay_ms) \
+    for (unsigned long _start = millis(); millis() - _start < delay;) { statement; }
+
+#define WaitLeftOnce(statement) \
+    { statement; }              \
+    WaitLeft()
+
+#define WaitRightOnce(statement) \
+    { statement; }               \
+    WaitRight()
+
+#define WaitBothOnce(statement) \
+    { statement; }              \
+    WaitBoth()
+
+#define WaitDelayOnce(statement, delay_ms) \
+    { statement; }                         \
+    WaitDelay(, delay_ms)
 
 #endif  // _TASKS_HPP
