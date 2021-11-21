@@ -3,33 +3,34 @@
 #include "isr.hpp"
 #include "modules.hpp"
 
+void hostCommunication();
+
 void setup() {
     flags::init();
     // led.setMode(OUTPUT);
-    beep.setMode(OUTPUT);
+    // beep.setMode(OUTPUT);
+    tcrtArray.init();
     tcrtL.setMode(INPUT), tcrtR.setMode(INPUT);
-    filter.reset();
 
     // motorL.init();
     // motorR.init();
-    ccd.init();
 
     // pitStart(200);
     isrStart();
     SerialIO::begin(115200);
-    Main();
+    // Main();
 }
 
 void loop() {
-    flags::tcrt.update();
+    // flags::tcrt.update();
+    // tcrtArray.collect();
+    // // tcrtArray.send();
+    // tcrtArray.calc();
+    // // SerialIO::write(tcrtArray.valid(), tcrtArray.res());
+    // // SerialIO::flush();
+    // delay(100);
 
-    ccd.collect();
-    // ccd.send();
-    ccd.calc();
-    SerialIO::write(ccd.res());
-    SerialIO::flush();
-    ccd.autoExp(100);
-    // SerialIO::write(sizeof(int), sizeof(unsigned long));
+    pidCtrl(true);
 }
 
 void serialEvent() {

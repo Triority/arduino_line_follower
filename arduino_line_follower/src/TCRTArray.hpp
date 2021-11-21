@@ -4,19 +4,28 @@
 #include <Arduino.h>
 
 class TCRTArray {
-    int8_t N;
+    const int8_t N;
     uint8_t* pins = nullptr;
-    uint16_t* data = nullptr;
-    uint16_t maxVal = 32767;
+    int16_t* data = nullptr;
+    const int16_t low, high;
+    bool _valid = false;
+    int32_t _res;
+    void collectDigital();
+    void collectAnalog();
 
  public:
-    TCRTArray(uint8_t* pins, int N) { setPin(pins, N); }
-    void setPin(const uint8_t* pins, int num);
+    TCRTArray(const uint8_t* pins, int8_t N, int16_t threshLow, int16_t threshHigh);
     ~TCRTArray();
+    void init();
 
     void collect();
+    int16_t operator[](int i) const { return data[i]; }
+    int8_t size() const { return N; }
+    void send() const;
 
     void calc();
+    bool valid() const { return _valid; }
+    int32_t res() const { return _res; }
 };
 
 #endif  // _TCRT_ARRAY_HPP

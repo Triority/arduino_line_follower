@@ -33,7 +33,7 @@ class Motor {
             setDir(false);
             pwm = -pwm;
         }
-        setPwm(pwm + 50);
+        setPwm(pwm + 5 * min(pwm, 10));
     }
 };
 

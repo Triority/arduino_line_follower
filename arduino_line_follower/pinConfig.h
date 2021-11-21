@@ -10,6 +10,9 @@
 #define TCRT_L 3
 #define TCRT_R 2
 
+#define TCRT_ARRAY A0, A1, A2, A3, A4, A5
+#define TCRT_NUM 6
+
 // MOTOR
 #define MOTOR_L_DIR 8
 #define MOTOR_L_PWM 9
