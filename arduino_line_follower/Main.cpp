@@ -30,15 +30,13 @@ void pidCtrl(bool send) {
     tcrtArray.collect();
     if (timer.ready(PID_PERIOD_MS)) {
         tcrtArray.calc();
-        if (tcrtArray.valid()) {
-            int error = TCRT_TARGET - tcrtArray.res();
-            if (PID_INVERT) error = -error;
+        int error = TCRT_TARGET - tcrtArray.res();
+        if (PID_INVERT) error = -error;
 
-            pid.update(error);
-            if (send) {
-                SerialIO::write(error, pid.output());
-                SerialIO::flush();
-            }
+        pid.update(error);
+        if (send) {
+            SerialIO::write(error, pid.output());
+            SerialIO::flush();
         }
         baseDriver.cmdVel(vel_X, pid.output() * PID_GAIN);
         tcrtArray.reset();
