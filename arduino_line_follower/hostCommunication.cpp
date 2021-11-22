@@ -33,7 +33,10 @@ inline void reset() {
 
 inline void startMain() { flags::startMain = true; }
 
-inline void startPID() { flags::startPID = true; }
+inline void startPID() {
+    pid.reset();
+    flags::startPID = true;
+}
 
 inline void remote() {
     float x, yaw;
