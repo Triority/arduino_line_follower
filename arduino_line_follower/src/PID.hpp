@@ -3,7 +3,7 @@
 
 #define INCREMENTAL_PID false
 
-#if INCREMENTAL_PID
+#if (INCREMENTAL_PID)
 
 class PID {
     float kp, ki, kd, limit;
@@ -41,6 +41,7 @@ class PID {
     float kp, ki, kd;
     float i, e_, u;
     bool _first;
+    uint16_t t_;
     friend void setPID();
 
  public:
@@ -51,10 +52,15 @@ class PID {
         _first = true;
     }
     float update(float e) {
+        uint16_t t = millis();
         i += e;
-        if (!_first) u = kp * e + ki * i + kd * (e - e_);
+        if (!_first) {
+            float dt = (t - t_) / 1000;
+            u = kp * e + ki * i * dt + kd * (e - e_) / dt;
+        }
         _first = false;
         e_ = e;
+        t_ = t;
         return u;
     }
     float output() const { return u; }

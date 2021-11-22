@@ -40,7 +40,7 @@ void pidCtrl(bool send) {
                 SerialIO::flush();
             }
         }
-        baseDriver.cmdVel(vel_X, pid.output() / 1024);
+        baseDriver.cmdVel(vel_X, pid.output() * PID_GAIN);
         tcrtArray.reset();
     }
 }
