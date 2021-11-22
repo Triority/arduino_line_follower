@@ -22,14 +22,9 @@ void setup() {
 void loop() {
     flags::tcrt.update();
 
-    // tcrtArray.collect();
-    // // tcrtArray.send();
-    // tcrtArray.calc();
-    // SerialIO::write(tcrtArray.valid(), tcrtArray.res());
-    // SerialIO::flush();
-    // delay(100);
-
+    // testTCRT();
     if (flags::startPID) pidCtrl(false);
+
     while (SerialIO::available()) hostCommunication();
 }
 

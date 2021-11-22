@@ -1,25 +1,32 @@
 #ifndef _MOTOR_HPP
 #define _MOTOR_HPP
 
-#define L298N
+#ifndef _L298N
+#define _L298N true
+#endif
 
 #include <Arduino.h>
 
-#ifdef L298N
+#if (_L298N)
 
 class Motor {
  private:
     const uint8_t pwmPin, dirA, dirB;
+    int16_t deadS, deadG;
     bool dir;
 
  public:
-    Motor(uint8_t pwm_pin, uint8_t inA, uint8_t inB) : pwmPin(pwm_pin), dirA(inA), dirB(inB) {}
+    Motor(uint8_t pwm_pin, uint8_t inA, uint8_t inB, int16_t deadZoneSize, int16_t deadZoneGain)
+        : pwmPin(pwm_pin), dirA(inA), dirB(inB) {
+        setDeadZone(deadZoneSize, deadZoneGain);
+    }
     void init() {
         pinMode(pwmPin, OUTPUT);
         pinMode(dirA, OUTPUT);
         pinMode(dirB, OUTPUT);
         setPwm(0);
     }
+    void setDeadZone(int16_t deadZoneSize, int16_t deadZoneGain) { deadS = deadZoneSize, deadG = deadZoneGain; }
     void setPwm(int32_t pwm) { analogWrite(pwmPin, min(pwm, 255)); }
     void setDir(bool dir) {
         this->dir = dir;
@@ -33,25 +40,31 @@ class Motor {
             setDir(false);
             pwm = -pwm;
         }
-        setPwm(pwm + 3 * min(pwm, 10));
+        setPwm(pwm + deadG * min(pwm, deadS));
     }
 };
 
-#else  // L298N
+#else  // _L298N
+
 class Motor {
  private:
     const uint8_t pwmPin, dirPin;
+    int16_t deadS, deadG;
     const bool invert;
     bool dir;
 
  public:
-    Motor(uint8_t pwm_pin, uint8_t dir_pin, bool isInverted) : pwmPin(pwm_pin), dirPin(dir_pin), invert(isInverted) {}
+    Motor(uint8_t pwm_pin, uint8_t dir_pin, bool isInverted, int16_t deadZoneSize, int16_t deadZoneGain)
+        : pwmPin(pwm_pin), dirPin(dir_pin), invert(isInverted) {
+        setDeadZone(deadZoneSize, deadZoneGain);
+    }
+    void setDeadZone(int16_t deadZoneSize, int16_t deadZoneGain) { deadS = deadZoneSize, deadG = deadZoneGain; }
     void init() {
         pinMode(pwmPin, OUTPUT);
         pinMode(dirPin, OUTPUT);
         setPwm(0);
     }
-    void setPwm(int32_t pwm) { analogWrite(pwmPin, constrain(pwm, 0, 255)); }
+    void setPwm(int32_t pwm) { analogWrite(pwmPin, min(pwm, 255)); }
     void setDir(bool dir) {
         this->dir = dir;
         digitalWrite(dirPin, dir ^ invert ? LOW : HIGH);
@@ -63,9 +76,10 @@ class Motor {
             setDir(false);
             pwm = -pwm;
         }
-        setPwm(pwm);
+        setPwm(pwm + deadG * min(pwm, deadS));
     }
 };
 
+#endif  // _L298N
+
 #endif  // _MOTOR_HPP
-#endif  // L298N

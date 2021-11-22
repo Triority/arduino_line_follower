@@ -15,6 +15,15 @@
 // BaseDriver
 #define BASE_X_VEL 100.f  // 向前直走的速度
 
+// Motor
+// 电机死区：当输出pwm过小时，电流不足以支持电机转动，因此需要在算法所得输出较低时给pwm一个补偿
+// 具体方案：真实pwm输出 = 所得输出 + GAIN * min(所得输出, SIZE)
+// 由于arduino的pwm输出范围只有0~255，所以这个值不应该设置过大
+#define MOTOR_L_DEADZONE_SIZE 10
+#define MOTOR_L_DEADZONE_GAIN 3
+#define MOTOR_R_DEADZONE_SIZE 10
+#define MOTOR_R_DEADZONE_GAIN 3
+
 // Flags
 #define FLAG_DURATION_TCRT_SIDE 200  // 两侧TCRT检测到黑线的标志位有效时间
 #define FLAG_DURATION_TCRT_BOTH 200  // 两侧TCRT标志位同时有效时会触发的both标志有效时间（这个其实并没有什么用）
