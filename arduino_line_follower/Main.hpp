@@ -2,6 +2,7 @@
 #define _MAIN_HPP
 
 void testTCRT(bool sendArray = true);
+void testLR();
 void pidCtrl(bool send = false);
 void Main();
 

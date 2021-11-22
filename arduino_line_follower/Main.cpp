@@ -20,6 +20,12 @@ void testTCRT(bool sendArray) {
     }
 }
 
+void testLR() {
+    using namespace flags;
+    SerialIO::write(tcrt[TCRT::left], tcrt[TCRT::right], tcrt[TCRT::both]);
+    SerialIO::flush();
+}
+
 void pidCtrl(bool send) {
     tcrtArray.collect();
     if (timer.ready(PID_PERIOD_MS)) {
