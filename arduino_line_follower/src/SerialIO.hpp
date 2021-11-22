@@ -4,6 +4,7 @@
 namespace SerialIO {
 
 inline void begin(unsigned long baud) {
+    Serial.setTimeout(100);
     Serial.begin(baud);
     while (!Serial)
         ;
@@ -34,6 +35,12 @@ template <typename T, typename... U> inline bool write(T t, U... u) { return wri
 inline void flush() {
     if (Serial.availableForWrite()) Serial.write("\x00\x00\x80\x7f", 4);
     Serial.flush();
+}
+
+inline int getChar() {
+    char c;
+    if (Serial.readBytes(&c, 1) != 1) return -1;
+    return c;
 }
 
 }  // namespace SerialIO

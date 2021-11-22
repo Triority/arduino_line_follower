@@ -12,13 +12,11 @@ void setup() {
     tcrtArray.init();
     tcrtL.setMode(INPUT), tcrtR.setMode(INPUT);
 
-    // motorL.init();
-    // motorR.init();
+    motorL.init();
+    motorR.init();
 
-    // pitStart(200);
     isrStart();
     SerialIO::begin(115200);
-    Main();
 }
 
 void loop() {
@@ -31,10 +29,10 @@ void loop() {
     // SerialIO::flush();
     // delay(100);
 
-    pidCtrl(false);
+    if (flags::startPID) pidCtrl(false);
+    while (SerialIO::available()) hostCommunication();
 }
 
 void serialEvent() {
-    // void hostCommunication();
     // while (SerialIO::available()) hostCommunication();
 }

@@ -40,7 +40,6 @@ class PID {
 class PID {
     float kp, ki, kd;
     float i, e_, u;
-    unsigned long t_;
     bool _first;
     friend void setPID();
 
@@ -51,14 +50,9 @@ class PID {
         i = e_ = u = 0;
         _first = true;
     }
-    float update(float e, unsigned long t) {
-        float dt = t - t_;
-        t_ = t;
+    float update(float e) {
         i += e;
-        if (!_first && dt > 0) {
-            dt /= 1000;
-            u = kp * e + ki * i * dt + kd * (e - e_) / dt;
-        }
+        if (!_first) u = kp * e + ki * i + kd * (e - e_);
         _first = false;
         e_ = e;
         return u;

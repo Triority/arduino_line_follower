@@ -12,8 +12,8 @@ void setPID();
 void stopPID();
 
 void hostCommunication() {
-    beep.writeDigital(true);
-    char op = Serial.read();
+    // beep.writeDigital(true);
+    char op = SerialIO::getChar();
     switch (op) {
     case 0x00: reset(); break;
     case 0x01: startMain(); break;
@@ -22,7 +22,7 @@ void hostCommunication() {
     case 0x04: setPID(); break;
     case 0x05: stopPID(); break;
     }
-    beep.writeDigital(false);
+    // beep.writeDigital(false);
 }
 
 inline void reset() {
@@ -41,14 +41,19 @@ inline void remote() {
 }
 
 inline void setPID() {
-    char op = Serial.read();
+    extern float vel_X;
+    char op = SerialIO::getChar();
     float tmp;
     if (!SerialIO::read(tmp)) return;
     switch (op) {
     case 0x00: pid.kp = tmp; break;
     case 0x01: pid.ki = tmp; break;
     case 0x02: pid.kd = tmp; break;
+    case 0x03: vel_X = tmp; break;
     }
 }
 
-inline void stopPID() { flags::startPID = false; }
+inline void stopPID() {
+    flags::startPID = false;
+    baseDriver.hardBrake();
+}

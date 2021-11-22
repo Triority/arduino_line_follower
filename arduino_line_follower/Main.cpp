@@ -5,16 +5,20 @@
 #include "modules.hpp"
 #include "src/tasks.hpp"
 
-// void testCCD(bool sendImg) {
-//     ccd.collect();
-//     ccd.calc();
-//     if (sendImg) ccd.send();
-//     else {
-//         SerialIO::write(ccd.expTime(), ccd.avg(), ccd.res());
-//         SerialIO::flush();
-//     }
-//     ccd.autoExp(100);
-// }
+float vel_X = BASE_X_VEL;
+
+void testTCRT(bool sendArray) {
+    tcrtArray.collect();
+    if (timer.ready(PID_PERIOD_MS)) {
+        tcrtArray.calc();
+        if (sendArray) tcrtArray.send();
+        else {
+            SerialIO::write(tcrtArray.valid(), tcrtArray.res());
+            SerialIO::flush();
+        }
+        tcrtArray.reset();
+    }
+}
 
 void pidCtrl(bool send) {
     tcrtArray.collect();
@@ -24,13 +28,13 @@ void pidCtrl(bool send) {
             int error = TCRT_TARGET - tcrtArray.res();
             if (PID_INVERT) error = -error;
 
-            pid.update(error, millis());
+            pid.update(error);
             if (send) {
                 SerialIO::write(error, pid.output());
                 SerialIO::flush();
             }
         }
-        baseDriver.cmdVel(BASE_X_VEL, int32_t(pid.output()) >> 10);
+        baseDriver.cmdVel(vel_X, pid.output() / 1024);
         tcrtArray.reset();
     }
 }
