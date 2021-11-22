@@ -3,7 +3,7 @@
 #include "constants.h"
 #include "flags.hpp"
 #include "modules.hpp"
-#include "src/tasks.hpp"
+#include "tasks.hpp"
 
 float vel_X = BASE_X_VEL;
 

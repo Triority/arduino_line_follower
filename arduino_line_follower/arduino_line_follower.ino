@@ -2,8 +2,7 @@
 #include "flags.hpp"
 #include "isr.hpp"
 #include "modules.hpp"
-
-void hostCommunication();
+#include "tasks.hpp"
 
 void setup() {
     flags::init();
@@ -20,14 +19,9 @@ void setup() {
 }
 
 void loop() {
-    flags::tcrt.update();
-
+    TaskEssentials();
     // testTCRT();
-    if (flags::startPID) pidCtrl(false);
 
-    while (SerialIO::available()) hostCommunication();
-}
-
-void serialEvent() {
-    // while (SerialIO::available()) hostCommunication();
+    if (flags::startMain) Main();
+    if (flags::startPID) pidCtrl(true);
 }
