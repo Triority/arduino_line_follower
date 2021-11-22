@@ -12,7 +12,7 @@
 #include "src/TCRTArray.hpp"
 #include "src/Timer.hpp"
 
-extern GPIO led, beep;
+extern GPIO led, beep, btn;
 extern GPIO tcrtL, tcrtR;
 // extern CCD ccd;
 extern Motor motorL, motorR;

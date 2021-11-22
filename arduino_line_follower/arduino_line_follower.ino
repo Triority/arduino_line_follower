@@ -8,6 +8,7 @@ void setup() {
     flags::init();
     // led.setMode(OUTPUT);
     // beep.setMode(OUTPUT);
+    // btn.setMode(INPUT);
     tcrtArray.init();
     tcrtL.setMode(INPUT), tcrtR.setMode(INPUT);
     motorL.init(), motorR.init();

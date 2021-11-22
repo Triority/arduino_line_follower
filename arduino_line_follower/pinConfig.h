@@ -1,6 +1,10 @@
 #ifndef _PIN_CONFIG_H
 #define _PIN_CONFIG_H
 
+// GPIO
+#define GPIO_BTN A2
+#define GPIO_BEEP A3
+
 // CCD
 #define CCD_SI 5
 #define CCD_CLK 4
@@ -10,6 +14,7 @@
 #define TCRT_L 3
 #define TCRT_R 2
 
+// TCRT_ARRAY
 #define TCRT_ARRAY A0, A1, A2, A3, A4, A5
 #define TCRT_NUM 6
 
@@ -17,10 +22,9 @@
 #define MOTOR_L_DIR 8
 #define MOTOR_L_PWM 9
 #define MOTOR_L_INV false
-
 #define MOTOR_R_DIR 11
 #define MOTOR_R_PWM 10
-#define MOTOR_R_INV true
+#define MOTOR_R_INV false
 
 // L298N
 #define MOTOR_L_A 9
