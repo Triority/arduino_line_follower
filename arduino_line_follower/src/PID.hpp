@@ -41,7 +41,6 @@ class PID {
     float kp, ki, kd;
     float i, e_, u;
     bool _first;
-    uint16_t t_;
     friend void setPID();
 
  public:
@@ -52,17 +51,12 @@ class PID {
         _first = true;
     }
     float update(float e) {
-        uint16_t t = millis();
         if ((e > 0) ^ (e_ > 0)) i = 0;
         else
-            i + e;
-        if (!_first) {
-            float dt = (float)(t - t_) / 1000;
-            u = kp * e + ki * i * dt + kd * (e - e_) / dt;
-        }
+            i += e;
+        if (!_first) { u = kp * e + ki * i + kd * (e - e_); }
         _first = false;
         e_ = e;
-        t_ = t;
         return u;
     }
     float output() const { return u; }
