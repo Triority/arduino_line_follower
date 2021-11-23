@@ -53,7 +53,9 @@ class PID {
     }
     float update(float e) {
         uint16_t t = millis();
-        i += e;
+        if ((e > 0) ^ (e_ > 0)) i = 0;
+        else
+            i + e;
         if (!_first) {
             float dt = (float)(t - t_) / 1000;
             u = kp * e + ki * i * dt + kd * (e - e_) / dt;
