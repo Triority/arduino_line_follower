@@ -20,6 +20,7 @@ void loop() {
     TaskEssentials();
     // testTCRT();
     // testLR();
+    // testAll();
 
     if (flags::startMain) Main();
     if (flags::startPID) pidCtrl(true);

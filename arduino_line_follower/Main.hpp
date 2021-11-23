@@ -3,6 +3,7 @@
 
 void testTCRT(bool sendArray = true);
 void testLR();
+void testAll();
 void pidCtrl(bool send = false);
 void Main();
 

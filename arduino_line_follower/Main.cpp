@@ -26,6 +26,17 @@ void testLR() {
     SerialIO::flush();
 }
 
+void testAll() {
+    tcrtArray.collect();
+    if (timer.ready(PID_PERIOD_MS)) {
+        tcrtArray.calc();
+        using namespace flags;
+        SerialIO::write(tcrt[TCRT::left], tcrt[TCRT::right], tcrt[TCRT::both]);
+        tcrtArray.send();
+        tcrtArray.reset();
+    }
+}
+
 void pidCtrl(bool send) {
     tcrtArray.collect();
     if (timer.ready(PID_PERIOD_MS)) {
@@ -35,7 +46,7 @@ void pidCtrl(bool send) {
 
         pid.update(error);
         if (send) {
-            SerialIO::write(error, pid.output());
+            SerialIO::write(error, pid.output() * PID_GAIN * 10);
             SerialIO::flush();
         }
         baseDriver.cmdVel(vel_X, pid.output() * PID_GAIN);
