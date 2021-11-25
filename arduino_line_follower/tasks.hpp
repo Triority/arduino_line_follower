@@ -1,6 +1,9 @@
 #ifndef _TASKS_HPP
 #define _TASKS_HPP
 
+#include "flags.hpp"
+#include "src/SerialIO.hpp"
+
 inline void TaskEssentials() {
     flags::tcrt.update();
     void hostCommunication();
