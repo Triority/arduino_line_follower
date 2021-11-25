@@ -11,14 +11,14 @@
 // PID
 // 公式：输出 = (KP * 当前误差 + I * 所有误差的积分 * 时间间隔 + D * (当前误差 - 上一次误差) / 时间间隔) * GAIN
 #define PID_INVERT false  // PID的输出是否取反
-#define PID_P 100.0       // KP
+#define PID_P 20603.0     // KP
 #define PID_I 0.0         // KI
-#define PID_D 0.0         // KD
+#define PID_D 520.0       // KD
 #define PID_PERIOD_MS 25  // PID目标控制周期，单位是毫秒，过小会导致积分和微分项失真，过大会影响系统响应速度
 #define PID_GAIN 1e-5  // 乘在PID输出上的倍率，可以让PID参数的系数变大，看着更舒服一点
 
 // BaseDriver
-#define BASE_X_VEL 100.f  // 向前直走的速度
+#define BASE_X_VEL 150.f  // 向前直走的速度
 
 // Motor
 // 电机死区：当输出pwm过小时，电流不足以支持电机转动，因此需要在算法所得输出较低时给pwm一个补偿

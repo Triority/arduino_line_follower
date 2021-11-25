@@ -1,6 +1,6 @@
 {
     "sketch": "arduino_line_follower\\arduino_line_follower.ino",
     "board": "arduino:avr:uno",
-    "port": "COM13",
+    "port": "COM5",
     "output": "build"
 }

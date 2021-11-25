@@ -21,6 +21,7 @@ void loop() {
     // testTCRT();
     // testLR();
     // testAll();
+    LRStop();
 
     if (flags::startMain) Main();
     if (flags::startPID) pidCtrl(true);

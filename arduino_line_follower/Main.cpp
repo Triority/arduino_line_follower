@@ -54,6 +54,14 @@ void pidCtrl(bool send) {
     }
 }
 
+void LRStop() {
+    using namespace flags;
+    if (startPID && (tcrt[TCRT::left] || tcrt[TCRT::right])) {
+        startPID = false;
+        baseDriver.hardBrake();
+    }
+}
+
 void Main() {
     WaitRight(pidCtrl());
     baseDriver.hardBrake();
