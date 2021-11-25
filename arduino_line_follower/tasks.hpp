@@ -32,10 +32,10 @@ inline void TaskEssentials() {
     }
 
 // 在 delay_ms 时间内循环执行 statement
-#define WaitDelay(statement, delay_ms)                                  \
-    for (unsigned long _start = millis(); millis() - _start < delay;) { \
-        TaskEssentials();                                               \
-        { statement; }                                                  \
+#define WaitDelay(statement, delay_ms)                                     \
+    for (unsigned long _start = millis(); millis() - _start < delay_ms;) { \
+        TaskEssentials();                                                  \
+        { statement; }                                                     \
     }
 
 #define WaitLeftOnce(statement) \
