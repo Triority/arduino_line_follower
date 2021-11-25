@@ -59,4 +59,5 @@ inline void setPID() {
 inline void stopPID() {
     flags::startPID = false;
     baseDriver.hardBrake();
+    tcrtArray.reset();
 }
