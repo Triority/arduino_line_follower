@@ -62,9 +62,96 @@ void LRStop() {
     }
 }
 
-void Main() {
-    WaitRight(pidCtrl());
+void turnLeft(unsigned long turn, unsigned long staight = 300) {
     baseDriver.hardBrake();
-    for (;;)
-        ;
+    WaitDelayOnce(baseDriver.cmdVel(100, 0), staight);
+    baseDriver.hardBrake();
+    WaitDelayOnce(baseDriver.cmdVel(50, 200), turn);
+    baseDriver.hardBrake();
+}
+
+void turnRight(unsigned long turn, unsigned long staight = 300) {
+    baseDriver.hardBrake();
+    WaitDelayOnce(baseDriver.cmdVel(100, 0), staight);
+    baseDriver.hardBrake();
+    WaitDelayOnce(baseDriver.cmdVel(50, -200), turn);
+    baseDriver.hardBrake();
+}
+
+void setPIDStraight() {
+    pid.set(15000, 0, 5410);
+    vel_X = 150;
+}
+
+void setPIDCurve() {
+    pid.set(10740, 0, 1338);
+    vel_X = 150;
+}
+
+void setPIDDrop() {
+    pid.set(16344, 0, 0);
+    vel_X = 100;
+}
+
+void Main() {
+    flags::startMain = false;
+
+    setPIDStraight();
+    WaitRight(pidCtrl());
+    turnRight(450);
+
+    setPIDStraight();
+    WaitDelay(pidCtrl(), 500);
+    WaitLeft(pidCtrl());
+    WaitDelay(pidCtrl(), 500);
+    WaitLeft(pidCtrl());
+    turnLeft(700);
+
+    setPIDStraight();
+    WaitDelay(pidCtrl(), 500);
+    WaitRight(pidCtrl());
+    turnRight(350, 100);
+
+    setPIDDrop();
+    WaitLeft(pidCtrl());
+    turnLeft(700);
+
+    setPIDCurve();
+    WaitDelay(pidCtrl(), 500);
+    WaitLeft(pidCtrl());
+    turnLeft(700);
+
+    setPIDStraight();
+    WaitDelay(pidCtrl(), 500);
+    WaitLeft(pidCtrl());
+    turnLeft(450);
+
+    setPIDStraight();
+    WaitDelay(pidCtrl(), 700);
+    WaitLeft(pidCtrl());
+    WaitDelay(pidCtrl(), 700);
+    WaitLeft(pidCtrl());
+    turnLeft(600);
+
+    setPIDCurve();
+    WaitDelay(pidCtrl(), 700);
+    WaitLeft(pidCtrl());
+    turnLeft(550);
+
+    setPIDStraight();
+    WaitLeft(pidCtrl());
+    WaitDelay(pidCtrl(), 5000);
+
+    setPIDCurve();
+    WaitRight(pidCtrl());
+    turnRight(450);
+
+    setPIDStraight();
+    WaitLeft(pidCtrl());
+    turnLeft(500);
+    WaitRight(pidCtrl());
+    turnRight(500);
+    WaitDelay(pidCtrl(), 1000);
+
+    baseDriver.hardBrake();
 }

@@ -2,7 +2,7 @@
 #define _MOTOR_HPP
 
 #ifndef _L298N
-#define _L298N false
+#define _L298N true
 #endif
 
 #include <Arduino.h>

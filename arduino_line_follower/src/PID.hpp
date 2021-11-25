@@ -46,8 +46,11 @@ class PID {
     friend void setPID();
 
  public:
-    PID(float kp = 0, float ki = 0, float kd = 0) { set(kp, ki, kd), reset(); }
-    void set(float kp, float ki, float kd) { this->kp = kp, this->ki = ki, this->kd = kd; }
+    PID(float kp = 0, float ki = 0, float kd = 0) { set(kp, ki, kd); }
+    void set(float kp, float ki, float kd) {
+        this->kp = kp, this->ki = ki, this->kd = kd;
+        reset();
+    }
     void reset() {
         i = e_ = u = 0;
         _first = true;
