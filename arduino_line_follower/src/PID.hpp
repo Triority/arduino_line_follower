@@ -1,5 +1,6 @@
 #ifndef _PID_HPP
 #define _PID_HPP
+#include "filter.hpp"
 
 #define INCREMENTAL_PID false
 
@@ -41,6 +42,7 @@ class PID {
     float kp, ki, kd;
     float i, e_, u;
     bool _first;
+    SMA<float, 20> _e;
     friend void setPID();
 
  public:
@@ -49,13 +51,16 @@ class PID {
     void reset() {
         i = e_ = u = 0;
         _first = true;
+        _e.reset();
     }
     float update(float e) {
         if ((e > 0) ^ (e_ > 0)) i = 0;
         else
             i += e;
-        if (!_first) { u = kp * e + ki * i + kd * (e - e_); }
+        // if (!_first) { u = kp * e + ki * i + kd * (e - e_); }
+        if (!_first) { u = kp * e + ki * i + kd * (e - _e.val); }
         _first = false;
+        _e.update(e);
         e_ = e;
         return u;
     }
