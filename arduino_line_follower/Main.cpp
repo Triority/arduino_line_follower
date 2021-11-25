@@ -79,12 +79,12 @@ void turnRight(unsigned long turn, unsigned long staight = 300) {
 }
 
 void setPIDStraight() {
-    pid.set(15000, 0, 5410);
+    pid.set(5361, 100, 5410);
     vel_X = 150;
 }
 
 void setPIDCurve() {
-    pid.set(10740, 0, 1338);
+    pid.set(12740, 0, 1338);
     vel_X = 150;
 }
 
@@ -97,59 +97,59 @@ void Main() {
     flags::startMain = false;
 
     setPIDStraight();
-    WaitRight(pidCtrl());
+    WaitRight(pidCtrl());  // 1
     turnRight(450);
 
     setPIDStraight();
     WaitDelay(pidCtrl(), 500);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 2
     WaitDelay(pidCtrl(), 500);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 3
     turnLeft(700);
 
     setPIDStraight();
     WaitDelay(pidCtrl(), 500);
-    WaitRight(pidCtrl());
+    WaitRight(pidCtrl());  // 4
     turnRight(350, 100);
 
     setPIDDrop();
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 5
     turnLeft(700);
 
     setPIDCurve();
     WaitDelay(pidCtrl(), 500);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 6
     turnLeft(700);
 
     setPIDStraight();
     WaitDelay(pidCtrl(), 500);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 7
     turnLeft(450);
 
     setPIDStraight();
     WaitDelay(pidCtrl(), 700);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 8
     WaitDelay(pidCtrl(), 700);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 9
     turnLeft(600);
 
     setPIDCurve();
     WaitDelay(pidCtrl(), 700);
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 10
     turnLeft(550);
 
     setPIDStraight();
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 11
     WaitDelay(pidCtrl(), 5000);
 
     setPIDCurve();
-    WaitRight(pidCtrl());
+    WaitRight(pidCtrl());  // 12
     turnRight(450);
 
     setPIDStraight();
-    WaitLeft(pidCtrl());
+    WaitLeft(pidCtrl());  // 13
     turnLeft(500);
-    WaitRight(pidCtrl());
+    WaitRight(pidCtrl());  // 14
     turnRight(500);
     WaitDelay(pidCtrl(), 1000);
 
