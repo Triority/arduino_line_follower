@@ -14,6 +14,8 @@ void setup() {
     motorL.init(), motorR.init();
     isrStart();
     SerialIO::begin(115200);
+    delay(1000);
+    flags::startMain = true;  // 是否开机就跑
 }
 
 void loop() {
